@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
@@ -126,6 +126,65 @@
       background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       color: white;
     }
+
+    /* FILE MANAGER */
+    .file-manager {
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 30px;
+    }
+
+    .file-item {
+      padding: 10px 15px;
+      margin: 5px 0;
+      background-color: white;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+
+    .file-item:hover {
+      transform: translateX(5px);
+    }
+
+    .file-icon {
+      margin-right: 10px;
+      color: var(--primary-color);
+    }
+
+    .file-actions button {
+      margin-left: 5px;
+      padding: 3px 8px;
+    }
+
+    .file-upload-area {
+      border: 2px dashed #ccc;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .file-upload-area:hover {
+      background-color: #f0f0f0;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 0;
+      color: #6c757d;
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 15px;
+    }
   </style>
 </head>
 <body>
@@ -143,6 +202,7 @@
           <li class="nav-item"><a class="nav-link" href="#education">Parcours</a></li>
           <li class="nav-item"><a class="nav-link" href="#experience">Expérience</a></li>
           <li class="nav-item"><a class="nav-link" href="#projects">Projets</a></li>
+          <li class="nav-item"><a class="nav-link" href="#files">Mes fichiers</a></li>
           <li class="nav-item"><a class="nav-link" href="#cv">Mon CV</a></li>
           <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
         </ul>
@@ -276,8 +336,37 @@
     </div>
   </section>
 
+  <!-- File Manager -->
+  <section id="files" class="py-5 bg-light">
+    <div class="container" data-aos="fade-up">
+      <h2 class="section-title">Mes fichiers</h2>
+      
+      <div class="file-manager">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4>Gestionnaire de fichiers</h4>
+          <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#uploadFileModal">
+            <i class="fas fa-plus me-1"></i> Ajouter un fichier
+          </button>
+        </div>
+        
+        <div class="file-upload-area" id="dropZone">
+          <i class="fas fa-cloud-upload-alt fa-3x mb-3"></i>
+          <p>Glissez-déposez vos fichiers ici ou cliquez pour parcourir</p>
+          <input type="file" id="fileInput" multiple style="display: none;">
+        </div>
+        
+        <div id="fileList">
+          <div class="empty-state">
+            <i class="fas fa-folder-open"></i>
+            <p>Aucun fichier pour le moment</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CV -->
-  <section id="cv" class="py-5 bg-light">
+  <section id="cv" class="py-5">
     <div class="container" data-aos="fade-up">
       <h2 class="section-title">Mon CV</h2>
       <div class="row justify-content-center">
@@ -302,7 +391,7 @@
       <h2 class="section-title">Me contacter</h2>
       <div class="row">
         <div class="col-md-6">
-          <form>
+          <form id="contactForm">
             <div class="mb-3">
               <label for="name" class="form-label">Nom</label>
               <input type="text" class="form-control" id="name" required>
@@ -323,7 +412,6 @@
             <p><i class="fas fa-envelope"></i> djeffalnawellbts@gmail.com</p>
             <p><i class="fas fa-phone"></i> +33 6 66 21 32 79</p>
             <p><i class="fas fa-map-marker-alt"></i> Gap, France</p>
-            </p>
           </div>
         </div>
       </div>
@@ -335,13 +423,249 @@
     <p class="mb-0">&copy; 2024 Nawell DJEFFAL - Tous droits réservés.</p>
   </footer>
 
+  <!-- Modal pour l'upload de fichiers -->
+  <div class="modal fade" id="uploadFileModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Ajouter un fichier</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="fileUploadInput" class="form-label">Sélectionner un fichier</label>
+            <input class="form-control" type="file" id="fileUploadInput">
+          </div>
+          <div class="mb-3">
+            <label for="fileName" class="form-label">Nom du fichier (optionnel)</label>
+            <input type="text" class="form-control" id="fileName" placeholder="Laisser vide pour utiliser le nom original">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="button" class="btn btn-primary" id="uploadFileBtn">Ajouter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
+    // Initialisation des animations
     AOS.init({
       duration: 1000,
       once: true
+    });
+
+    // Gestionnaire de fichiers
+    document.addEventListener('DOMContentLoaded', function() {
+      // Références aux éléments DOM
+      const fileList = document.getElementById('fileList');
+      const dropZone = document.getElementById('dropZone');
+      const fileInput = document.getElementById('fileInput');
+      const fileUploadInput = document.getElementById('fileUploadInput');
+      const fileNameInput = document.getElementById('fileName');
+      const uploadFileBtn = document.getElementById('uploadFileBtn');
+      
+      // Charger les fichiers depuis le localStorage
+      let files = JSON.parse(localStorage.getItem('portfolioFiles')) || [];
+      
+      // Afficher les fichiers
+      function renderFiles() {
+        if (files.length === 0) {
+          fileList.innerHTML = `
+            <div class="empty-state">
+              <i class="fas fa-folder-open"></i>
+              <p>Aucun fichier pour le moment</p>
+            </div>
+          `;
+          return;
+        }
+        
+        let html = '';
+        files.forEach((file, index) => {
+          const iconClass = getFileIconClass(file.name);
+          html += `
+            <div class="file-item">
+              <div>
+                <i class="fas ${iconClass} file-icon"></i>
+                <span>${file.name}</span>
+                <small class="text-muted ms-2">${formatFileSize(file.size)}</small>
+              </div>
+              <div class="file-actions">
+                <button class="btn btn-sm btn-outline-primary view-file" data-index="${index}">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-success download-file" data-index="${index}">
+                  <i class="fas fa-download"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger delete-file" data-index="${index}">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          `;
+        });
+        
+        fileList.innerHTML = html;
+        
+        // Ajouter les écouteurs d'événements
+        attachFileEventListeners();
+      }
+      
+      // Obtenir l'icône appropriée selon l'extension du fichier
+      function getFileIconClass(fileName) {
+        const extension = fileName.split('.').pop().toLowerCase();
+        const iconMap = {
+          'pdf': 'fa-file-pdf',
+          'doc': 'fa-file-word',
+          'docx': 'fa-file-word',
+          'xls': 'fa-file-excel',
+          'xlsx': 'fa-file-excel',
+          'ppt': 'fa-file-powerpoint',
+          'pptx': 'fa-file-powerpoint',
+          'jpg': 'fa-file-image',
+          'jpeg': 'fa-file-image',
+          'png': 'fa-file-image',
+          'gif': 'fa-file-image',
+          'txt': 'fa-file-alt',
+          'zip': 'fa-file-archive',
+          'rar': 'fa-file-archive'
+        };
+        
+        return iconMap[extension] || 'fa-file';
+      }
+      
+      // Formater la taille du fichier
+      function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+      }
+      
+      // Ajouter les écouteurs d'événements pour les fichiers
+      function attachFileEventListeners() {
+        // Visualiser un fichier
+        document.querySelectorAll('.view-file').forEach(button => {
+          button.addEventListener('click', function() {
+            const index = this.getAttribute('data-index');
+            const file = files[index];
+            alert(`Visualisation du fichier: ${file.name}\n(Fonctionnalité de visualisation à implémenter)`);
+          });
+        });
+        
+        // Télécharger un fichier
+        document.querySelectorAll('.download-file').forEach(button => {
+          button.addEventListener('click', function() {
+            const index = this.getAttribute('data-index');
+            const file = files[index];
+            
+            // Créer un lien de téléchargement
+            const a = document.createElement('a');
+            a.href = file.data;
+            a.download = file.name;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          });
+        });
+        
+        // Supprimer un fichier
+        document.querySelectorAll('.delete-file').forEach(button => {
+          button.addEventListener('click', function() {
+            const index = this.getAttribute('data-index');
+            const fileName = files[index].name;
+            
+            if (confirm(`Êtes-vous sûr de vouloir supprimer le fichier "${fileName}"?`)) {
+              files.splice(index, 1);
+              localStorage.setItem('portfolioFiles', JSON.stringify(files));
+              renderFiles();
+            }
+          });
+        });
+      }
+      
+      // Gestion de la zone de glisser-déposer
+      dropZone.addEventListener('click', () => {
+        fileInput.click();
+      });
+      
+      dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.style.backgroundColor = '#e9ecef';
+      });
+      
+      dropZone.addEventListener('dragleave', () => {
+        dropZone.style.backgroundColor = '';
+      });
+      
+      dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.style.backgroundColor = '';
+        
+        if (e.dataTransfer.files.length) {
+          processFiles(e.dataTransfer.files);
+        }
+      });
+      
+      fileInput.addEventListener('change', () => {
+        if (fileInput.files.length) {
+          processFiles(fileInput.files);
+        }
+      });
+      
+      // Traitement des fichiers uploadés
+      function processFiles(fileList) {
+        for (let i = 0; i < fileList.length; i++) {
+          const file = fileList[i];
+          const reader = new FileReader();
+          
+          reader.onload = function(e) {
+            const fileName = document.getElementById('fileName').value || file.name;
+            
+            files.push({
+              name: fileName,
+              size: file.size,
+              type: file.type,
+              data: e.target.result,
+              lastModified: file.lastModified
+            });
+            
+            localStorage.setItem('portfolioFiles', JSON.stringify(files));
+            renderFiles();
+            
+            // Fermer la modal et réinitialiser
+            bootstrap.Modal.getInstance(document.getElementById('uploadFileModal')).hide();
+            fileUploadInput.value = '';
+            fileNameInput.value = '';
+          };
+          
+          reader.readAsDataURL(file);
+        }
+      }
+      
+      // Gestion de l'upload via le modal
+      uploadFileBtn.addEventListener('click', () => {
+        if (fileUploadInput.files.length) {
+          processFiles(fileUploadInput.files);
+        } else {
+          alert('Veuillez sélectionner un fichier');
+        }
+      });
+      
+      // Gestion du formulaire de contact
+      document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Message envoyé avec succès! (simulation)');
+        this.reset();
+      });
+      
+      // Initialiser l'affichage des fichiers
+      renderFiles();
     });
   </script>
 </body>
