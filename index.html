@@ -185,6 +185,13 @@
       font-size: 3rem;
       margin-bottom: 15px;
     }
+
+    .file-note {
+      font-size: 0.85rem;
+      color: #6c757d;
+      margin-top: 10px;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -213,10 +220,10 @@
   <!-- Hero -->
   <section class="hero-section text-center" data-aos="fade-up">
     <div class="container">
-      <img src="nawell.jpg" alt="Photo de Nawell DJEFFAL" class="profile-img rounded-circle mb-4">
+      <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&q=80" alt="Photo de Nawell DJEFFAL" class="profile-img rounded-circle mb-4">
       <h1 class="display-4">Nawell DJEFFAL</h1>
       <p class="lead mb-4">Étudiante en BTS SIO (Services Informatiques aux Organisations)</p>
-      <a href="Mon_CV.pdf" download class="btn btn-light btn-lg me-3">
+      <a href="#cv" class="btn btn-light btn-lg me-3">
         <i class="fas fa-download me-2"></i>Télécharger mon CV
       </a>
       <a href="#contact" class="btn btn-outline-light btn-lg">Me contacter</a>
@@ -356,10 +363,11 @@
         </div>
         
         <div id="fileList">
-          <div class="empty-state">
-            <i class="fas fa-folder-open"></i>
-            <p>Aucun fichier pour le moment</p>
-          </div>
+          <!-- Les fichiers seront ajoutés ici dynamiquement -->
+        </div>
+        
+        <div class="file-note">
+          <i class="fas fa-info-circle"></i> Les fichiers que vous ajoutez ne seront visibles que depuis votre navigateur actuel.
         </div>
       </div>
     </div>
@@ -371,12 +379,14 @@
       <h2 class="section-title">Mon CV</h2>
       <div class="row justify-content-center">
         <div class="col-lg-10">
-          <embed src="Mon_CV.pdf" type="application/pdf" width="100%" height="600px" class="shadow rounded">
+          <div class="text-center mb-4">
+            <img src="https://images.unsplash.com/photo-1586281380117-5a60ae2050cc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80" alt="CV de Nawell DJEFFAL" class="img-fluid shadow rounded" style="max-height: 600px;">
+          </div>
           <div class="text-center mt-3">
-            <a href="Mon_CV.pdf" target="_blank" class="btn btn-primary me-2">
+            <a href="#cv" class="btn btn-primary me-2" onclick="alert('Fonctionnalité de visualisation en plein écran à implémenter')">
               <i class="fas fa-eye me-2"></i>Voir en plein écran
             </a>
-            <a href="Mon_CV.pdf" download class="btn btn-success">
+            <a href="#cv" class="btn btn-success" onclick="alert('Fonctionnalité de téléchargement à implémenter')">
               <i class="fas fa-download me-2"></i>Télécharger
             </a>
           </div>
@@ -459,6 +469,31 @@
       once: true
     });
 
+    // Fichiers prédéfinis accessibles à tous
+    const predefinedFiles = [
+      {
+        name: "CV_Nawell_DJEFFAL.pdf",
+        size: 1024576,
+        type: "application/pdf",
+        data: "#",
+        predefined: true
+      },
+      {
+        name: "Lettre_de_motivation.pdf",
+        size: 542310,
+        type: "application/pdf",
+        data: "#",
+        predefined: true
+      },
+      {
+        name: "Projet_BTS_SIO.pdf",
+        size: 2048576,
+        type: "application/pdf",
+        data: "#",
+        predefined: true
+      }
+    ];
+
     // Gestionnaire de fichiers
     document.addEventListener('DOMContentLoaded', function() {
       // Références aux éléments DOM
@@ -470,7 +505,10 @@
       const uploadFileBtn = document.getElementById('uploadFileBtn');
       
       // Charger les fichiers depuis le localStorage
-      let files = JSON.parse(localStorage.getItem('portfolioFiles')) || [];
+      let userFiles = JSON.parse(localStorage.getItem('portfolioFiles')) || [];
+      
+      // Combiner les fichiers prédéfinis et les fichiers utilisateur
+      let files = [...predefinedFiles, ...userFiles];
       
       // Afficher les fichiers
       function renderFiles() {
@@ -493,17 +531,20 @@
                 <i class="fas ${iconClass} file-icon"></i>
                 <span>${file.name}</span>
                 <small class="text-muted ms-2">${formatFileSize(file.size)}</small>
+                ${file.predefined ? '<span class="badge bg-info ms-2">Public</span>' : '<span class="badge bg-secondary ms-2">Local</span>'}
               </div>
               <div class="file-actions">
-                <button class="btn btn-sm btn-outline-primary view-file" data-index="${index}">
+                <button class="btn btn-sm btn-outline-primary view-file" data-index="${index}" ${file.predefined ? 'data-predefined="true"' : ''}>
                   <i class="fas fa-eye"></i>
                 </button>
-                <button class="btn btn-sm btn-outline-success download-file" data-index="${index}">
+                <button class="btn btn-sm btn-outline-success download-file" data-index="${index}" ${file.predefined ? 'data-predefined="true"' : ''}>
                   <i class="fas fa-download"></i>
                 </button>
+                ${!file.predefined ? `
                 <button class="btn btn-sm btn-outline-danger delete-file" data-index="${index}">
                   <i class="fas fa-trash"></i>
                 </button>
+                ` : ''}
               </div>
             </div>
           `;
@@ -553,8 +594,14 @@
         document.querySelectorAll('.view-file').forEach(button => {
           button.addEventListener('click', function() {
             const index = this.getAttribute('data-index');
+            const isPredefined = this.getAttribute('data-predefined') === 'true';
             const file = files[index];
-            alert(`Visualisation du fichier: ${file.name}\n(Fonctionnalité de visualisation à implémenter)`);
+            
+            if (isPredefined) {
+              alert(`Visualisation du fichier public: ${file.name}\nPour les fichiers publics, cette fonctionnalité nécessiterait que les fichiers soient réellement disponibles sur le serveur.`);
+            } else {
+              alert(`Visualisation du fichier local: ${file.name}\n(Fonctionnalité de visualisation à implémenter)`);
+            }
           });
         });
         
@@ -562,27 +609,36 @@
         document.querySelectorAll('.download-file').forEach(button => {
           button.addEventListener('click', function() {
             const index = this.getAttribute('data-index');
+            const isPredefined = this.getAttribute('data-predefined') === 'true';
             const file = files[index];
             
-            // Créer un lien de téléchargement
-            const a = document.createElement('a');
-            a.href = file.data;
-            a.download = file.name;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+            if (isPredefined) {
+              alert(`Téléchargement du fichier public: ${file.name}\nPour les fichiers publics, cette fonctionnalité nécessiterait que les fichiers soient réellement disponibles sur le serveur.`);
+            } else {
+              // Créer un lien de téléchargement pour les fichiers locaux
+              const a = document.createElement('a');
+              a.href = file.data;
+              a.download = file.name;
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+            }
           });
         });
         
-        // Supprimer un fichier
+        // Supprimer un fichier (uniquement les fichiers utilisateur)
         document.querySelectorAll('.delete-file').forEach(button => {
           button.addEventListener('click', function() {
             const index = this.getAttribute('data-index');
-            const fileName = files[index].name;
+            // Ajuster l'index pour le tableau userFiles
+            const userFileIndex = index - predefinedFiles.length;
+            const fileName = userFiles[userFileIndex].name;
             
             if (confirm(`Êtes-vous sûr de vouloir supprimer le fichier "${fileName}"?`)) {
-              files.splice(index, 1);
-              localStorage.setItem('portfolioFiles', JSON.stringify(files));
+              userFiles.splice(userFileIndex, 1);
+              localStorage.setItem('portfolioFiles', JSON.stringify(userFiles));
+              // Reconstruire le tableau files
+              files = [...predefinedFiles, ...userFiles];
               renderFiles();
             }
           });
@@ -627,7 +683,7 @@
           reader.onload = function(e) {
             const fileName = document.getElementById('fileName').value || file.name;
             
-            files.push({
+            userFiles.push({
               name: fileName,
               size: file.size,
               type: file.type,
@@ -635,7 +691,9 @@
               lastModified: file.lastModified
             });
             
-            localStorage.setItem('portfolioFiles', JSON.stringify(files));
+            localStorage.setItem('portfolioFiles', JSON.stringify(userFiles));
+            // Reconstruire le tableau files
+            files = [...predefinedFiles, ...userFiles];
             renderFiles();
             
             // Fermer la modal et réinitialiser
