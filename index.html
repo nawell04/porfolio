@@ -199,6 +199,74 @@
       padding: 20px;
       margin: 20px 0;
     }
+    
+    /* PDF VIEWER */
+    .pdf-viewer-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 9999;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .pdf-viewer-header {
+      width: 90%;
+      max-width: 900px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #fff;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+    
+    .pdf-viewer-body {
+      width: 90%;
+      max-width: 900px;
+      height: 80%;
+      background-color: #fff;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .pdf-viewer-body iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    .pdf-viewer-close {
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #333;
+    }
+    
+    .pdf-viewer-title {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    
+    .pdf-viewer-controls {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .pdf-viewer-controls button {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      background-color: var(--primary-color);
+      color: white;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -223,6 +291,20 @@
       </div>
     </div>
   </nav>
+
+  <!-- PDF Viewer -->
+  <div class="pdf-viewer-container" id="pdfViewer">
+    <div class="pdf-viewer-header">
+      <div class="pdf-viewer-title" id="pdfViewerTitle">Document PDF</div>
+      <div class="pdf-viewer-controls">
+        <button id="pdfDownloadBtn"><i class="fas fa-download me-1"></i> Télécharger</button>
+        <span class="pdf-viewer-close" id="pdfViewerClose"><i class="fas fa-times"></i></span>
+      </div>
+    </div>
+    <div class="pdf-viewer-body">
+      <iframe id="pdfFrame" src="about:blank"></iframe>
+    </div>
+  </div>
 
   <!-- Hero -->
   <section class="hero-section text-center" data-aos="fade-up">
@@ -356,8 +438,8 @@
       <h2 class="section-title">Mes fichiers</h2>
       
       <div class="demo-content">
-        <h4><i class="fas fa-info-circle me-2"></i>Démonstration du gestionnaire de fichiers</h4>
-        <p class="mb-0">Cette section montre le fonctionnement du gestionnaire de fichiers. Pour une utilisation réelle, vous devrez héberger vos fichiers en ligne et mettre à jour les liens ci-dessous.</p>
+        <h4><i class="fas fa-info-circle me-2"></i>Gestionnaire de fichiers PDF</h4>
+        <p class="mb-0">Visualisez et téléchargez mes documents PDF directement depuis cette page.</p>
       </div>
       
       <div class="file-manager">
@@ -367,10 +449,6 @@
         
         <div id="fileList">
           <!-- Les fichiers seront ajoutés ici dynamiquement -->
-        </div>
-        
-        <div class="file-note">
-          <i class="fas fa-info-circle"></i> Pour ajouter vos propres fichiers, vous devrez les héberger en ligne et modifier les liens dans le code.
         </div>
       </div>
     </div>
@@ -383,13 +461,27 @@
       <div class="row justify-content-center">
         <div class="col-lg-10">
           <div class="text-center mb-4">
-            <img src="https://images.unsplash.com/photo-1586281380117-5a60ae2050cc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80" alt="CV de Nawell DJEFFAL" class="img-fluid shadow rounded" style="max-height: 600px;">
+            <div style="position: relative; display: inline-block;">
+              <img src="https://images.unsplash.com/photo-1586281380117-5a60ae2050cc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80" alt="CV de Nawell DJEFFAL" class="img-fluid shadow rounded" style="max-height: 600px;">
+              <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; border-radius: 8px;" class="hover-overlay">
+                <button class="btn btn-primary view-cv-btn" data-file="cv">Voir mon CV</button>
+              </div>
+            </div>
+            <script>
+              // Ajouter l'effet de survol pour le CV
+              document.querySelector('.hover-overlay').addEventListener('mouseover', function() {
+                this.style.opacity = 1;
+              });
+              document.querySelector('.hover-overlay').addEventListener('mouseout', function() {
+                this.style.opacity = 0;
+              });
+            </script>
           </div>
           <div class="text-center mt-3">
-            <a href="#cv" class="btn btn-primary me-2" onclick="viewCV()">
-              <i class="fas fa-eye me-2"></i>Voir en plein écran
-            </a>
-            <a href="#cv" class="btn btn-success" onclick="downloadCV()">
+            <button class="btn btn-primary me-2 view-cv-btn" data-file="cv">
+              <i class="fas fa-eye me-2"></i>Voir mon CV
+            </button>
+            <a href="cv.pdf" class="btn btn-success" download="CV_Nawell_DJEFFAL.pdf">
               <i class="fas fa-download me-2"></i>Télécharger
             </a>
           </div>
@@ -453,27 +545,27 @@
         size: "1.2 MB",
         type: "application/pdf",
         url: "file:///C:/Users/djeff/OneDrive/Bureau/mon%20portfolio/Pr%C3%A9sentation%20et%20param%C3%A9trage%20du%20mat%C3%A9riel%20informatique.pdf", 
-        description: "1"
+        description: "Présentation et paramétrage du matériel informatique"
       },
       {
         name: "Lettre_Motivation.pdf",
         size: "0.8 MB",
         type: "application/pdf",
-        url: "#", // Remplacez par l'URL réelle de votre lettre de motivation
+        url: "lettre_motivation.pdf", // Remplacez par l'URL réelle de votre lettre de motivation
         description: "Lettre de motivation type"
       },
       {
         name: "Projet_BTS_SIO.pdf",
         size: "2.5 MB",
         type: "application/pdf",
-        url: "#", // Remplacez par l'URL réelle de votre projet
+        url: "projet_bts_sio.pdf", // Remplacez par l'URL réelle de votre projet
         description: "Détails de mon projet de BTS SIO"
       },
       {
         name: "Recommandation_Stage.docx",
         size: "0.5 MB",
         type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        url: "#", // Remplacez par l'URL réelle de votre lettre de recommandation
+        url: "recommandation_stage.docx", // Remplacez par l'URL réelle de votre lettre de recommandation
         description: "Lettre de recommandation de mon stage"
       }
     ];
@@ -482,6 +574,13 @@
     document.addEventListener('DOMContentLoaded', function() {
       // Références aux éléments DOM
       const fileList = document.getElementById('fileList');
+      const pdfViewer = document.getElementById('pdfViewer');
+      const pdfFrame = document.getElementById('pdfFrame');
+      const pdfViewerTitle = document.getElementById('pdfViewerTitle');
+      const pdfViewerClose = document.getElementById('pdfViewerClose');
+      const pdfDownloadBtn = document.getElementById('pdfDownloadBtn');
+      
+      let currentFile = null;
       
       // Afficher les fichiers
       function renderFiles() {
@@ -549,6 +648,34 @@
         return iconMap[extension] || 'fa-file';
       }
       
+      // Afficher un PDF dans le visualiseur
+      function showPDF(file) {
+        currentFile = file;
+        pdfViewerTitle.textContent = file.name;
+        pdfFrame.src = file.url;
+        pdfViewer.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Empêcher le défilement
+      }
+      
+      // Fermer le visualiseur PDF
+      function closePDFViewer() {
+        pdfViewer.style.display = 'none';
+        pdfFrame.src = 'about:blank';
+        document.body.style.overflow = ''; // Réactiver le défilement
+      }
+      
+      // Télécharger le fichier actuellement affiché
+      function downloadCurrentFile() {
+        if (currentFile) {
+          const a = document.createElement('a');
+          a.href = currentFile.url;
+          a.download = currentFile.name;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }
+      }
+      
       // Ajouter les écouteurs d'événements pour les fichiers
       function attachFileEventListeners() {
         // Visualiser un fichier
@@ -557,10 +684,10 @@
             const index = this.getAttribute('data-index');
             const file = availableFiles[index];
             
-            if (file.url === "#") {
-              alert("Pour visualiser ce fichier, vous devez ajouter l'URL réelle du fichier dans le code.");
+            if (file.type === 'application/pdf') {
+              showPDF(file);
             } else {
-              window.open(file.url, '_blank');
+              alert("Ce type de fichier ne peut pas être prévisualisé. Veuillez le télécharger.");
             }
           });
         });
@@ -571,19 +698,26 @@
             const index = this.getAttribute('data-index');
             const file = availableFiles[index];
             
-            if (file.url === "#") {
-              alert("Pour télécharger ce fichier, vous devez ajouter l'URL réelle du fichier dans le code.");
-            } else {
-              const a = document.createElement('a');
-              a.href = file.url;
-              a.download = file.name;
-              document.body.appendChild(a);
-              a.click();
-              document.body.removeChild(a);
-            }
+            const a = document.createElement('a');
+            a.href = file.url;
+            a.download = file.name;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
           });
         });
       }
+      
+      // Écouteurs pour le visualiseur PDF
+      pdfViewerClose.addEventListener('click', closePDFViewer);
+      pdfDownloadBtn.addEventListener('click', downloadCurrentFile);
+      
+      // Fermer le visualiseur en cliquant à l'extérieur
+      pdfViewer.addEventListener('click', function(e) {
+        if (e.target === pdfViewer) {
+          closePDFViewer();
+        }
+      });
       
       // Gestion du formulaire de contact
       document.getElementById('contactForm').addEventListener('submit', function(e) {
@@ -592,19 +726,20 @@
         this.reset();
       });
       
+      // Boutons pour voir le CV
+      document.querySelectorAll('.view-cv-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          showPDF({
+            name: "CV Nawell DJEFFAL",
+            url: "cv.pdf",
+            type: "application/pdf"
+          });
+        });
+      });
+      
       // Initialiser l'affichage des fichiers
       renderFiles();
     });
-
-    // Fonctions pour le CV
-    function viewCV() {
-      alert("Pour visualiser le CV, vous devez ajouter l'URL réelle de votre CV dans le code.");
-    }
-
-    function downloadCV() {
-      alert("Pour télécharger le CV, vous devez ajouter l'URL réelle de votre CV dans le code.");
-    }
   </script>
 </body>
-
 </html>
