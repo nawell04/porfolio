@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfolio — Nawell-Medjahed</title>
+<meta name="description" content="Portfolio personnel de Nawell-Medjahed — Étudiant BTS SIO">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<!-- Bootstrap 5 (CSS only) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<style>
+  :root {
+    --accent: #0ea5e9;
+    --dark: #0b1220;
+  }
+  html, body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; scroll-behavior: smooth; }
+  .navbar-brand strong { letter-spacing: .3px; }
+  .hero {
+    background: radial-gradient(1200px 600px at 85% -10%, rgba(14,165,233,.25), transparent),
+                radial-gradient(900px 600px at -10% -20%, rgba(99,102,241,.25), transparent),
+                linear-gradient(180deg, #0b1220 0%, #0f172a 100%);
+    color:#fff;
+  }
+  .hero .avatar { width: 160px; height:160px; border-radius: 20px; object-fit: cover; border:3px solid rgba(255,255,255,.25); box-shadow: 0 15px 35px rgba(2,6,23,.3); }
+  .section-title { font-weight: 800; letter-spacing: .2px; }
+  .pill { background: rgba(14,165,233,.1); border:1px solid rgba(14,165,233,.2); color:#0ea5e9; padding:.4rem .7rem; border-radius:999px; font-weight:600; font-size:.9rem; }
+  .shadow-soft { box-shadow: 0 10px 35px rgba(2,6,23,.08); }
+  .timeline { position: relative; padding-left: 1.5rem; }
+  .timeline::before { content: ""; position: absolute; left: .6rem; top: .2rem; bottom: .2rem; width: 2px; background: rgba(14,165,233,.35); }
+  .tl-item { position: relative; margin-left:.5rem; padding-left:1.2rem; margin-bottom:1.2rem; }
+  .tl-item::before { content:""; position:absolute; left:-.15rem; top:.35rem; width:.8rem; height:.8rem; background:#fff; border:3px solid var(--accent); border-radius:50%; }
+  .skill-bar { height: .75rem; background: #e9ecef; border-radius: 999px; overflow:hidden; }
+  .skill-fill { height:100%; background: linear-gradient(90deg, var(--accent), #22c55e); }
+  .project-card img { object-fit: cover; height: 180px; }
+  .footer { background:#0f172a; color:#cbd5e1; }
+  .footer a { color:#94a3b8; }
+</style>
+</head>
+<body>
+
+<nav id="top" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="#top">
+      <span class="rounded-circle me-2" style="display:inline-block;width:10px;height:10px;background:var(--accent)"></span>
+      <strong>Mattéo Mouranchon</strong>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#about">À propos</a></li>
+        <li class="nav-item"><a class="nav-link" href="#skills">Compétences</a></li>
+        <li class="nav-item"><a class="nav-link" href="#projects">Projets</a></li>
+        <li class="nav-item"><a class="nav-link" href="#experience">Expérience</a></li>
+        <li class="nav-item"><a class="nav-link" href="#compte-rendu">Compte-rendu</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+       <li class="nav-item">
+  <a class="btn btn-sm btn-primary ms-lg-3" href="cv-nawell.pdf" download>
+    Télécharger mon CV
+  </a>
+</li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<header class="hero pt-5">
+  <div class="container py-5">
+    <div class="row align-items-center gy-4 py-4">
+      <div class="col-md-8">
+        <span class="pill mb-3 d-inline-flex align-items-center gap-2"><span class="badge rounded-pill bg-success">BTS SIO</span> Option SISR</span>
+        <h1 class="display-5 fw-bold">Étudiant en systèmes & réseaux — passionné de sécurité et virtualisation</h1>
+        <p class="lead text-white-50">Administration Windows / Linux, pare‑feu & VPN, hyperviseurs (Hyper‑V, VMware), déploiement de postes et support.</p>
+        <div class="d-flex gap-3">
+          <a href="#projects" class="btn btn-primary btn-lg">Voir mes projets</a>
+          <a href="#contact" class="btn btn-outline-light btn-lg">Entrer en contact</a>
+        </div>
+      </div>
+      <div class="col-md-4 text-md-end text-center">
+        <img class="avatar" src="My photo.jpg" alt="Photo de profil">
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="about" class="py-5">
+  <div class="container">
+    <div class="row align-items-start gy-4">
+      <div class="col-lg-7">
+        <h2 class="section-title mb-3">À propos de moi</h2>
+        <p>Je m’appelle <strong>Mattéo Mouranchon</strong>, étudiant en <strong>BTS SIO</strong> (option SISR) à Gap. Je m’intéresse à l’<strong>administration système</strong> et à la <strong>sécurité réseau</strong>, avec un goût prononcé pour la <strong>virtualisation</strong> et l’automatisation des tâches d’exploitation.</p>
+        <p>Je sais installer, configurer, sécuriser et maintenir des environnements Windows Server et GNU/Linux, déployer des postes et logiciels à l’échelle, et mettre en œuvre des solutions VPN/pare‑feu.</p>
+        <ul class="list-unstyled small">
+          <li>📍 Basé à <strong>Gap / Curbans (05110)</strong></li>
+          <li>🌐 Anglais professionnel</li>
+          <li>🎯 Ouvert aux stages/alternances en {now}</li>
+        </ul>
+      </div>
+      <div class="col-lg-5">
+        <div class="p-4 rounded-4 shadow-soft border">
+          <h6 class="text-uppercase text-muted mb-3">Diplômes & formations</h6>
+          <ul class="mb-0">
+            <li><strong>BTS SIO</strong> — Lycée Dominique Villars, Gap (2025–en cours)</li>
+            <li><strong>BAC PRO Systèmes Numériques</strong> option ARED — LP Privé Poutrain (2023–2025)</li>
+            <li><strong>DNB</strong> — Collège Centre Gap (2018–2022)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="section-title mb-4">Compétences</h2>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="card shadow-soft h-100">
+          <div class="card-body">
+            <h5 class="card-title">Systèmes</h5>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between"><span>Windows Server</span><span>80%</span></div>
+              <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+            </div>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between"><span>Linux</span><span>70%</span></div>
+              <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+            </div>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between"><span>Déploiement postes & logiciels</span><span>75%</span></div>
+              <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card shadow-soft h-100">
+          <div class="card-body">
+            <h5 class="card-title">Réseau & sécurité</h5>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between"><span>Pare‑feu & VPN</span><span>70%</span></div>
+              <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+            </div>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between"><span>Virtualisation (Hyper‑V, VMware)</span><span>75%</span></div>
+              <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+            </div>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between"><span>Conteneurisation (Docker)</span><span>60%</span></div>
+              <div class="skill-bar"><div class="skill-fill" style="width:60%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4 d-flex flex-wrap gap-2">
+      <span class="badge text-bg-dark">PowerShell</span>
+      <span class="badge text-bg-dark">Bash</span>
+      <span class="badge text-bg-dark">Active Directory</span>
+      <span class="badge text-bg-dark">VMware ESXi</span>
+      <span class="badge text-bg-dark">Hyper‑V</span>
+      <span class="badge text-bg-dark">Docker</span>
+      <span class="badge text-bg-dark">Supervision</span>
+      <span class="badge text-bg-dark">Support N1/N2</span>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="py-5">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-end mb-3">
+      <h2 class="section-title m-0">Projets</h2>
+      <span class="text-muted small">Images : Unsplash</span>
+    </div>
+    <div class="row g-4">
+      <!-- Project 1 -->
+      <div class="col-md-4">
+        <div class="card project-card shadow-soft h-100">
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop" class="card-img-top" alt="Projet LAB Virtualisation">
+          <div class="card-body">
+            <h5 class="card-title">LAB de virtualisation domestique</h5>
+            <p class="card-text text-muted">Mise en place d’un homelab : Hyper‑V + VMware, VLANs et AD.</p>
+            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#p1">Détails</button>
+          </div>
+        </div>
+      </div>
+      <!-- Project 2 -->
+      <div class="col-md-4">
+        <div class="card project-card shadow-soft h-100">
+          <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=1200&auto=format&fit=crop" class="card-img-top" alt="Projet déploiement poste">
+          <div class="card-body">
+            <h5 class="card-title">Déploiement automatisé de postes</h5>
+            <p class="card-text text-muted">Scripts PowerShell, GPO et images pour l’onboarding.</p>
+            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#p2">Détails</button>
+          </div>
+        </div>
+      </div>
+      <!-- Project 3 -->
+      <div class="col-md-4">
+        <div class="card project-card shadow-soft h-100">
+          <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" class="card-img-top" alt="Projet supervision">
+          <div class="card-body">
+            <h5 class="card-title">Supervision & alerting</h5>
+            <p class="card-text text-muted">Mise en place d’une stack de monitoring open‑source.</p>
+            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#p3">Détails</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal fade" id="p1" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title">LAB de virtualisation domestique</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+        <div class="modal-body">
+          <ul>
+            <li>Virtualisation mixte Hyper‑V / VMware.</li>
+            <li>Active Directory, DNS/DHCP, serveur de fichiers et snapshots.</li>
+            <li>Réseaux isolés, VLANs et pare‑feu, accès VPN.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="p2" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title">Déploiement automatisé de postes</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+        <div class="modal-body">
+          <ul>
+            <li>Images maitrisées, sysprep et politiques de sécurité.</li>
+            <li>Scripts PowerShell d’installation applicative et durcissement.</li>
+            <li>Réduction du temps d’onboarding & standardisation.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="p3" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title">Supervision & alerting</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+        <div class="modal-body">
+          <ul>
+            <li>Collecte métriques/événements, tableaux de bord et alertes mail.</li>
+            <li>Tests de disponibilité et capacité.</li>
+            <li>Documentation d’exploitation et procédures.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="section-title mb-4">Expérience</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <h6 class="mb-1">Stagiaire — <strong>Sun Valley System</strong>, Gap</h6>
+        <div class="text-muted small mb-2">sept. 2024 – oct. 2024</div>
+        <p class="mb-2">Maintenance préventive/corrective, préparation d’unités centrales & portables, et diverses tâches d’assistance.</p>
+      </div>
+      <div class="tl-item">
+        <h6 class="mb-1">Stagiaire — <strong>Alpes Conseil Informatique</strong>, Gap</h6>
+        <div class="text-muted small mb-2">nov. 2023 – déc. 2023</div>
+        <p class="mb-2">Maintenance préventive et corrective, installation d’infrastructures réseau.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="compte-rendu" class="py-5">
+  <div class="container">
+    <h2 class="section-title mb-4">Compte-rendu</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card shadow-soft h-100">
+          <div class="card-body">
+            <h5 class="card-title">Installation réseau & maintenance</h5>
+            <p class="text-muted">Détails sur l’installation et la maintenance réseau.</p>
+            <a class="btn btn-outline-primary" href="pdf/compte-rendu-installation-reseau-et-maintenance.pdf" download>Télécharger</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-soft h-100">
+          <div class="card-body">
+            <h5 class="card-title">Portfolio</h5>
+            <p class="text-muted">Présentation de mon portfolio.</p>
+            <a class="btn btn-outline-primary" href="pdf/compte-rendu-portfolio.pdf" download>Télécharger</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-soft h-100">
+          <div class="card-body">
+            <h5 class="card-title">Algorime Screach</h5>
+            <p class="text-muted">Compte-rendu-screatch.</p>
+            <a class="btn btn-outline-primary" href="pdf/Compte-rendu-screatch.pdf" download>Télécharger</a>
+          </div>
+        </div>
+      </div>
+       <div class="col-md-4">
+        <div class="card shadow-soft h-100">
+          <div class="card-body">
+            <h5 class="card-title">Logiciel diagnostic</h5>
+            <p class="text-muted">Compte-rendu logiciel diagnostic</p>
+            <a class="btn btn-outline-primary" href="pdf/Compte-rendu logiciel diagnostic.pdf" download>Télécharger</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-soft h-100">
+          <div class="card-body">
+            <h5 class="card-title">Logiciel capture d'écran</h5>
+            <p class="text-muted">Compte-rendu logiciel Capture</p>
+            <a class="btn btn-outline-primary" href="pdf/Compte-Rendu capture d'éceran Bloc 3 TP01.pdf" download>Télécharger</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-soft h-100">
+          <div class="card-body">
+            <h5 class="card-title">Mes premier pas sur le code Java</h5>
+            <p class="text-muted">Compte-rendu mes premier pas java</p>
+            <a class="btn btn-outline-primary" href="pdf/Compte-rendu-mes-premier-pas-java.pdf" download>Télécharger</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="contact" class="py-5">
+  <div class="container">
+    <h2 class="section-title mb-4">Contact</h2>
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <div class="p-4 rounded-4 shadow-soft border h-100">
+          <h6 class="text-uppercase text-muted">Discutons de vos besoins</h6>
+          <p>N’hésitez pas à me contacter pour un stage, une alternance ou une mission freelance.</p>
+          <ul class="list-unstyled">
+            <li>📧 <a href="mailto:matteo.mouranchon@gmail.com">matteo.mouranchon@gmail.com</a></li>
+            <li>📍 Gap / Curbans (05110)</li>
+          </ul>
+          <div class="d-flex gap-2">
+            <a class="btn btn-outline-dark btn-sm" href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+            <a class="btn btn-outline-dark btn-sm" href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="p-4 rounded-4 shadow-soft border">
+          <form onsubmit="event.preventDefault(); alert('Merci ! Votre message a bien été simulé côté client.');">
+            <div class="mb-3">
+              <label class="form-label">Nom</label>
+              <input type="text" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Message</label>
+              <textarea class="form-control" rows="4" required></textarea>
+            </div>
+            <button class="btn btn-primary">Envoyer</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer py-4">
+  <div class="container d-flex flex-wrap justify-content-between align-items-center">
+    <span>© <span id="year"></span> Mattéo Mouranchon — Tous droits réservés.</span>
+    <div class="d-flex gap-3">
+      <a href="#top">Haut de page</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Fenêtre modale Télécharger abandoné -->
+<div class="modal fade" id="downloadModal" tabindex="-1" aria-labelledby="downloadModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="downloadModalLabel">Téléchargements disponibles</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group" id="downloadList">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>🛠️ Compte‑rendu — Installation réseau & maintenance</span>
+            <a class="btn btn-outline-primary btn-sm" href="docs/compte-rendu-installation-reseau-et-maintenance.docx" download>Télécharger</a>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>🌐 Compte‑rendu — Portfolio</span>
+            <a class="btn btn-outline-primary btn-sm" href="docs/compte-rendu-portfolio.docx" download>Télécharger</a>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>🎮 Compte‑rendu — Algorime (jeu de blocs)</span>
+            <a class="btn btn-outline-primary btn-sm" href="docs/compte-rendu-algorime.docx" download>Télécharger</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap 5 Bundle (JS) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
